@@ -1,0 +1,67 @@
+
+# Иерархия исключений
+'''
+Base Exception
+->system exit
+-->keyboard interput
+--->Genrator Exit
+---->Exception
+     ->Arithmetic Error
+     -->OS Error
+     --->Value Error'''
+'''
+def set_age(age):
+    if age<0:
+        raise VallueError("out of range")'''
+# два варианта записи
+'''
+import logging 
+except ConnectionError as e:#в этом случае информация об ошибке не сохранится
+    logging.error("ошибка сети")
+    raise ConnectionError("ошибка сети")
+except ConnectionError:
+    logging.error("ошибка сети")
+    raise #здесь останется trace бэке'''
+#пример использования raise
+'''
+class BaseParser:
+    def parse(self,data):
+        raise NotImplementedError(f"Класс {self.__class__.__name__} должен реализовать метод parse")
+ 
+'''
+#json-текстовый формат для хранения текстовых файлов
+import json
+'''
+dataaa = {"name":"Vanya","is_student":True,"grades":[4,5,5]}
+json_string=json.dumps(dataaa)#ensure_ascii=False - этот параметр если добавить, то с русским языком будет все норм, а так слова заменятся на кодировку
+print(json_string)
+parsed_data=json.loads(json_string)
+print(parsed_data)
+
+with open ("dataaa.json","w",encoding="utf-8") as f:
+    json.dump(dataaa,f,indent=4,ensure_ascii=False)
+with open ("dataaa.json","r",encoding="utf-8") as f:
+    loaded_dataaa=json.load(f)'''
+'''
+class Student:
+    def __init__(self,name,age):
+        self.name=name
+        self.age=age
+stud=Student("Петр",19)
+def student_to_dict(obj):
+    if isinstance(obj,Student):
+        return {"name":obj.name,"age":obj.age,"type":"Student"}
+    raise TypeError("Unknow object type")
+json_str=json.dumps(stud,default=student_to_dict,ensure_ascii=False)
+with open("data2.json","w",encoding="utf-8") as f:
+    json.dump(json_str,f,indent=4,ensure_ascii=False)'''
+#чтение созданного файла и работа с данными
+with open("students_db.json", encoding="utf-8") as f:
+    students = json.load(f)
+
+for s in students:
+    if not s["is_active"]:
+        s["scholarship"] = 0
+
+with open("students_updated.json", "w", encoding="utf-8") as f:
+    json.dump(students, f, ensure_ascii=False, indent=4)
